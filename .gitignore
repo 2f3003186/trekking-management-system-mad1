@@ -1,2 +1,3 @@
 instance/
+database.sqlite3
 __pycache__/
