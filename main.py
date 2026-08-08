@@ -1,7 +1,7 @@
-from applications.model import db
-from applications.controllers import *
+from applications.model import db, User
 import os
 from flask import Flask
+from werkzeug.security import generate_password_hash, check_password_hash
 
 cur_dir = os.path.dirname(__file__)
 
@@ -10,6 +10,7 @@ def create_app():
 
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(os.path.abspath(cur_dir) , "database.sqlite3")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SECRET_KEY'] = "My-Secret-Key-123456"
     db.init_app(app)
 
     with app.app_context():
@@ -24,15 +25,17 @@ def create_admin():
     if not admin_exists:
         admin = User(
             name = "admin",
-            password = "admin_pass",
+            password = generate_password_hash("password"),
             role = "admin",
             email = "admin_123@gmail.com",
-            ph_no = "1234567890"
+            ph_num = "1234567890"
         )
         db.session.add(admin)
         db.session.commit()
 
+app = create_app()
+from applications.controllers import *
+
 if __name__ == "__main__":
-    app = create_app()
     app.run(debug=True, host="0.0.0.0", port=8080)
 

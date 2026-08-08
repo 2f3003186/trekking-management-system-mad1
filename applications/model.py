@@ -10,7 +10,7 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True)
     role = db.Column(db.String, nullable=False)
-    ph_no = db.Column(db.String, unique=True)
+    ph_num = db.Column(db.String, unique=True)
     time_created = db.Column(db.DateTime, default=datetime.now)
 
     bookings = db.relationship("Booking", back_populates="user")
