@@ -143,3 +143,21 @@ def user_bookings(user_id):
         user=user,
         bookings=bookings
     )
+
+@app.route('/user/trek_history/<int:user_id>')
+def user_trek_history(user_id):
+    user = User.query.get(user_id)
+    
+    # Fetches bookings where the trek was completed
+    completed_bookings = Booking.query.filter(
+        Booking.user_id == user_id,
+        Booking.status == "Completed"
+    ).all()
+
+    return render_template(
+        "/user/trek_history.html",
+        current_user_name=f"{user.name}",
+        current_role="user",
+        user=user,
+        history=completed_bookings
+    )
