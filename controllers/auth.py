@@ -1,5 +1,5 @@
 from flask import render_template, request, flash, redirect
-from .model import db, User, Staff, Trek, StaffAssignments, Booking
+from model import db, User, Staff, Trek, StaffAssignments, Booking
 from main import app
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -17,14 +17,14 @@ def login():
             if check_password_hash(user.password, password) and user.email == email:
 
                 if user.role == "admin":
-                    return redirect('/dashboard/admin')
+                    return redirect('/admin/dashboard')
                 
                 if user.role == "staff":
                     staff_member = Staff.query.filter_by(user_id=user.id)
-                    return redirect(f'/dashboard/staff/{staff_member.id}')
+                    return redirect(f'/staff/dashboard/{staff_member.id}')
 
                 if user.role == "user":
-                    return redirect(f'/dashboard/user/{user.id}')
+                    return redirect(f'/user/dashboard/{user.id}')
 
         else:
             flash("Account with enetered details not found !", "error")
@@ -66,14 +66,3 @@ def register():
 
     return render_template("register.html")
 
-@app.route('/dashboard/admin', methods=["GET", "POST"])
-def admin_dashboard():
-    return render_template("admin_dashboard.html")
-
-@app.route('/dashboard/staff/<int:staff_id>', methods=["GET", "POST"])
-def staff_dashboard(staff_id):
-    return render_template("staff_dashboard.html")
-
-@app.route('/dashboard/user/<int:user_id>', methods=["GET", "POST"])
-def user_dashboard(user_id):
-    return render_template("user_dashboard.html")

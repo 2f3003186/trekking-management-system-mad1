@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Treks{% endblock %}
+
+{% block sidebar %} 
+<li class="nav-item"><a class="nav-link" href="/admin/dashboard">Dashboard</a></li>
+<li class="nav-item"><a class="nav-link active" href="/admin/treks">Treks</a></li>
+<li class="nav-item"><a class="nav-link" href="/admin/staff">Staff</a></li>
+<li class="nav-item"><a class="nav-link" href="/admin/users">Users</a></li>
+<li class="nav-item"><a class="nav-link" href="/admin/bookings">Bookings</a></li>
+{% endblock %}
+
+{% block content %}
+<h3 class="mb-4">Treks</h3>
+<div class="d-flex justify-content-end align-items-center mb-1">
+    <a class="btn btn-primary" href="/admin/trek/create">Add New Trek</a>
+</div>
+
+<form class="mb-3" method="GET" style="max-width:450px">
+    <div class="input-group">
+        <span class="input-group-text">
+            <i class="bi bi-search"></i>
+        </span>
+        <input class="form-control" type="text" name="q" placeholder="Search by name or id" value="{{ request.args.get('q', '') }}">
+    </div>
+</form>
+
+{% if not result and query %}
+<h5 class="mt-2 fw-bold">No Results Found !</h5>
+{% endif %}
+<table class="table bg-white">
+    <thead>
+        <th>ID</th>
+        <th>Trek Name</th>
+        <th>Location</th>
+        <th>Difficulty</th>
+        <th>Slots</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </thead>
+    <tbody>
+        {% for trek in result %}
+        <tr>
+            <td>{{ trek.id }}</td>
+            <td>{{ trek.name }}</td>
+            <td>{{ trek.location }}</td>
+            <td>{{ trek.difficulty }}</td>
+            <td>{{ trek.available_slots }}</td>
+            <td>{{ trek.status }}</td>
+            <td>
+                <div class="btn-group gap-2">
+                    <a class="btn btn-outline-secondary rounded-pill" href="/admin/trek/update/{{ trek.id }}">Edit</a>
+                    <a class="btn btn-danger rounded-pill" href="/admin/trek/delete/{{ trek.id }}">Delete</a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

@@ -41,8 +41,8 @@ class Trek(db.Model):
     duration = db.Column(db.Integer, nullable=False)
     available_slots = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String, default="Open")
-    start_date = db.Column(db.DateTime, nullable=False)
-    end_date = db.Column(db.DateTime, nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
 
     bookings = db.relationship("Booking", back_populates="trek")
     assigned_staff = db.relationship("StaffAssignments", back_populates="trek")
