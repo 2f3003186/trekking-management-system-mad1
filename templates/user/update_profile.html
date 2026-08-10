@@ -1,4 +1,4 @@
-{% extends "/staff/profile.html" %}
+{% extends "/user/profile.html" %}
 
 {% block content %}
 <h4 class="mb-4">Update Profile</h4>
@@ -23,7 +23,7 @@
         
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-primary">Update Profile</button>
-            <a href="/staff/profile/{{staff_id}}" class="btn btn-outline-secondary">Cancel</a>
+            <a href="/user/profile/{{user.id}}" class="btn btn-outline-secondary">Cancel</a>
         </div>
     </form>
 </div>

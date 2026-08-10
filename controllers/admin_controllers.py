@@ -31,6 +31,7 @@ def create_trek():
         status = request.form.get('status')
         start_date = datetime.strptime(request.form.get('start_date'), "%Y-%m-%d").date()
         end_date = datetime.strptime(request.form.get('end_date'), "%Y-%m-%d").date()
+        description = request.form.get('description')
         trek = Trek(
             name=name,
             location=location,
@@ -39,7 +40,8 @@ def create_trek():
             available_slots=available_slots,
             status=status,
             start_date=start_date,
-            end_date=end_date
+            end_date=end_date,
+            description=description
         )
         try:
             db.session.add(trek)
@@ -88,6 +90,7 @@ def update_trek(trek_id):
             trek.status = request.form.get('status')
             trek.start_date = datetime.strptime(request.form.get('start_date'), "%Y-%m-%d").date()
             trek.end_date = datetime.strptime(request.form.get('end_date'), "%Y-%m-%d").date()
+            trek.description = request.form.get('description')
             assigned_staff = map(int, request.form.getlist('staff'))
 
             for staff_member_id in assigned_staff:

@@ -51,6 +51,10 @@
                 {% endfor %}
             </select>
         </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description </label>
+            <input value="{{ trek.description }}" class="form-control" type="text" name="description" id="description">
+        </div>
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-primary">Update Trek</button>
             <a href="/admin/treks" class="btn btn-outline-secondary">Cancel</a>

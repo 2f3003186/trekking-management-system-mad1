@@ -2,7 +2,7 @@
 {% block title %}My Dashboard{% endblock %}
 
 {% block sidebar %} 
-<li class="nav-item"><a class="nav-link active" href="/staff/dashboard">Dashboard</a></li>
+<li class="nav-item"><a class="nav-link active" href="/staff/dashboard/{{ staff_id }}">Dashboard</a></li>
 <li class="nav-item"><a class="nav-link" href="/staff/treks/{{ staff_id }}">My Treks</a></li>
 <li class="nav-item"><a class="nav-link" href="/staff/users/{{ staff_id }}">Participants</a></li>
 <li class="nav-item"><a class="nav-link" href="/staff/profile/{{ staff_id }}">Profile</a></li>

@@ -45,6 +45,7 @@ class Trek(db.Model):
     status = db.Column(db.String, default="Open")
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
+    description = db.Column(db.String)
 
     bookings = db.relationship("Booking", back_populates="trek", cascade="all, delete-orphan")
     assigned_staff = db.relationship("StaffAssignments", back_populates="trek", cascade="all, delete-orphan")

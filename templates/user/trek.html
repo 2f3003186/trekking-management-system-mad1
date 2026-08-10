@@ -1,0 +1,29 @@
+{% extends "/user/treks.html" %}
+{% block content %}
+<a href="/user/dashboard/{{user.id}}" class="btn btn-sm btn-outline-secondary mb-3">Back</a>
+
+<h3>{{ trek.name }}</h3>
+<p class="text-muted">{{ trek.location }} • {{ trek.difficulty }}</p>
+
+<table class="table bg-white">
+    <tr><td>Duration</td><td>{{ trek.duration }} days</td></tr>
+    <tr><td>Start Date</td><td>{{ trek.start_date.strftime('%d %b %Y') }}</td></tr>
+    <tr><td>End Date</td><td>{{ trek.end_date.strftime('%d %b %Y') }}</td></tr>
+    <tr><td>Available Slots</td><td>{{ trek.available_slots }}</td></tr>
+    <tr><td>Status</td><td>{{ trek.status }}</td></tr>
+</table>
+
+<p>{{ trek.description }}</p>
+
+{% if booking %}
+<form method="POST" action="/user/trek/{{ user.id }}/cancel/{{ trek.id }}">
+    <button type="submit" class="btn btn-danger">Cancel Booking</button>
+</form>
+{% elif trek.status == "Open" and trek.available_slots > 0 %}
+<form method="POST" action="/user/trek/{{ user.id }}/book/{{ trek.id }}">
+    <button type="submit" class="btn btn-primary">Book Now</button>
+</form>
+{% else %}
+<button class="btn btn-secondary" disabled>Not Available</button>
+{% endif %}
+{% endblock %}
