@@ -44,8 +44,9 @@ class Trek(db.Model):
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
 
-    bookings = db.relationship("Booking", back_populates="trek")
-    assigned_staff = db.relationship("StaffAssignments", back_populates="trek")
+    bookings = db.relationship("Booking", back_populates="trek", cascade="all, delete-orphan")
+    assigned_staff = db.relationship("StaffAssignments", back_populates="trek", cascade="all, delete-orphan")
+
 
 
 class Booking(db.Model):

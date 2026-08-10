@@ -65,11 +65,6 @@ def delete_trek(trek_id):
     trek = Trek.query.get(trek_id)
     try:
         db.session.delete(trek)
-        staff_assignments = StaffAssignments.query.filter_by(trek_id=trek.id).all()
-        for assignment in staff_assignments:
-            db.session.delete(assignment)
-        for booking in trek.bookings:
-            db.session.delete(booking)
         db.session.commit()
         flash("Trek deleted Successfully !")
 
