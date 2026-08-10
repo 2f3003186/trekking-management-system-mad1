@@ -30,7 +30,7 @@
         </div>
         <div class="mb-3">
             <label for="status" class="form-label">Status </label>
-            <select class="form-select" type="text" name="status" id="status" required>
+            <select class="form-select" name="status" id="status" required>
                 <option value="open" {% if trek.status == "open" %} selected {% endif %}>Open</option>
                 <option value="closed" {% if trek.status == "closed" %} selected {% endif %}>Closed</option>
             </select>
@@ -46,9 +46,8 @@
         <div class="mb-3">
             <label for="staff" class="form-label">Staff </label>
             <select class="form-select" name="staff" id="staff" multiple size="4">
-                <option value="" disabled selected>Assign Staff</option>
                 {% for staff_member in staff %}
-                <option value="{{staff_member.id}}" {% if staff_member.id in assigned_staff_id  %} selected {% endif %}>{{staff_member.name}}</option>
+                <option value="{{staff_member.id}}" {% if staff_member.id in assigned_staff_id  %} selected {% endif %}>{{staff_member.user.name}}</option>
                 {% endfor %}
             </select>
         </div>

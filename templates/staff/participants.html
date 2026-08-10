@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Participants{% endblock %}
+
+{% block sidebar %} 
+<li class="nav-item"><a class="nav-link" href="/staff/dashboard">Dashboard</a></li>
+<li class="nav-item"><a class="nav-link" href="/staff/treks/{{ staff_id }}">My Treks</a></li>
+<li class="nav-item"><a class="nav-link active" href="/staff/users/{{ staff_id }}">Participants</a></li>
+<li class="nav-item"><a class="nav-link" href="/staff/profile/{{ staff_id }}">Profile</a></li>
+{% endblock %}
+
+{% block content %}
+{% for trek in treks %}
+<h4 class="mb-4">{{ trek.name }}</h4>
+<h5>Active Participants</h5>
+<table class="table bg-white align-middle mt-2 mb-4">
+    <thead>
+        <th>S.No</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>Booking Date</th>
+        <th>Status</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        <tr>
+            {% for b in trek.booking %}
+            {% if b.status == "booked" %}
+            <td>{{ loop.index }}</td>
+            <td>{{ b.user.name }}</td>
+            <td>{{ b.user.email }}</td>
+            <td>{{ b.user.ph_num }}</td>
+            <td>{{ b.date }}</td>
+            <td>{{ b.status }}</td>
+            <td>
+                <a class="btn btn-danger" href="/staff/users/{{ staff_id }}/cancel/{{ b.id }}">Cancel</a>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<h5 class="mt-2">Cancelled Participants</h5>
+<table class="table bg-white align-middle mb-4">
+    <thead>
+        <th>S.No</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>Booking Date</th>
+        <th>Status</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        <tr>
+            {% for b in trek.booking %}
+            {% if b.status == "cancelled" %}
+            <td>{{ loop.index }}</td>
+            <td>{{ b.user.name }}</td>
+            <td>{{ b.user.email }}</td>
+            <td>{{ b.user.ph_num }}</td>
+            <td>{{ b.date }}</td>
+            <td>{{ b.status }}</td>
+            <td>
+                <a class="btn btn-primary" href="/staff/users/{{ staff_id }}/restore/{{ b.id }}">Restore</a>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endfor %}
+{% endblock %}

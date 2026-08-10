@@ -20,7 +20,7 @@ def login():
                     return redirect('/admin/dashboard')
                 
                 if user.role == "staff":
-                    staff_member = Staff.query.filter_by(user_id=user.id)
+                    staff_member = Staff.query.filter_by(user_id=user.id).first()
                     return redirect(f'/staff/dashboard/{staff_member.id}')
 
                 if user.role == "user":
@@ -57,8 +57,12 @@ def register():
             role=role,
             password=generate_password_hash(password)
         )
-
+        
         db.session.add(new_user)
+        db.session.commit()
+        if role == "staff":
+            new_staff = Staff(user_id=new_user.id, status="pending")
+            db.session.add(new_staff)
         db.session.commit()
 
         flash("Registration Successful! You can now Login with your credentials", "success")

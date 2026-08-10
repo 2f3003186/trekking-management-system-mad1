@@ -1,0 +1,42 @@
+{% extends "/staff/treks.html" %}
+{% block title %}Manage Trek{% endblock %}
+
+{% block content %}
+<h4>{{ trek.name }}</h4>
+<div class="row mb-2">
+    <div class="col-md-6">
+        <dl class="row mb-0">
+            <dt class="col-sm-4">Location</dt>
+            <dd class="col-sm-8">{{ trek.location }}</dd>
+            <dt class="col-sm-4">Duration</dt>
+            <dd class="col-sm-8">{{ trek.duration }} days</dd>
+            <dt class="col-sm-4">Start Date</dt>
+            <dd class="col-sm-8">{{ trek.start_date }}</dd>
+            <dt class="col-sm-4">End Date</dt>
+            <dd class="col-sm-8">{{ trek.end_date }}</dd>
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <dl class="row mb-0">
+            <dt class="col-sm-4">Slots</dt>
+            <dd class="col-sm-8">{{ trek.available_slots }}</dd>
+        </dl>
+        <form class="form" method="POST">
+            <label for="status" class="form-label">Status </label>
+            <select class="form-select" name="status" id="status" required>
+                <option value="open" {% if trek.status == "open" %} selected {% endif %}>Open</option>
+                <option value="closed" {% if trek.status == "closed" %} selected {% endif %}>Closed</option>
+            </select>
+            <div class="btn-group mt-2 gap-2">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="/staff/dashboard/{{staff_id}}" class="btn btn-danger">Cancel</a>
+        </div>
+        </form>
+        
+    </div>
+</div>
+<div class="btn-group mt-2 gap-2">
+    <a class="btn btn-outline-secondary" href="/staff/trek/{{ staff_id }}/mark_started/{{trek.id}}">Mark as Started</a>
+    <a class="btn btn-outline-secondary" href="/staff/trek/{{ staff_id }}/mark_completed/{{trek.id}}">Mark as Completed</a>
+</div>
+{% endblock %}

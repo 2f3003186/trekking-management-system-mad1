@@ -1,14 +1,62 @@
 {% extends "base.html" %}
-{% block title %}Manage Staff{% endblock %}
+{% block title %}My Dashboard{% endblock %}
 
 {% block sidebar %} 
-<li class="nav-item"><a class="nav-link" href="/admin/dashboard">Dashboard</a></li>
-<li class="nav-item"><a class="nav-link" href="/admin/treks">Treks</a></li>
-<li class="nav-item"><a class="nav-link active" href="/admin/staff">Staff</a></li>
-<li class="nav-item"><a class="nav-link" href="/admin/users">Users</a></li>
-<li class="nav-item"><a class="nav-link" href="/admin/bookings">Bookings</a></li>
+<li class="nav-item"><a class="nav-link active" href="/staff/dashboard">Dashboard</a></li>
+<li class="nav-item"><a class="nav-link" href="/staff/treks/{{ staff_id }}">My Treks</a></li>
+<li class="nav-item"><a class="nav-link" href="/staff/users/{{ staff_id }}">Participants</a></li>
+<li class="nav-item"><a class="nav-link" href="/staff/profile/{{ staff_id }}">Profile</a></li>
 {% endblock %}
 
 {% block content %}
-
+<h3 class="mb-4">My Dashboard</h3>
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card p-3">
+            <div class="text-muted small">My Treks</div>
+            <div class="fs-3 fw-bold">{{trek_count}}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3">
+            <div class="text-muted small">Open Treks</div>
+            <div class="fs-3 fw-bold">{{open_trek_count}}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3">
+            <div class="text-muted small">Participants</div>
+            <div class="fs-3 fw-bold">{{user_count}}</div>
+        </div>
+    </div>
+</div>
+<table class="table bg-white align-middle">
+    <thead>
+        <th>S.No</th>
+        <th>Trek Name</th>
+        <th>Location</th>
+        <th>Difficulty</th>
+        <th>Slots</th>
+        <th>Status</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        {% for trek in treks %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ trek.name }}</td>
+            <td>{{ trek.location }}</td>
+            <td>{{ trek.difficulty }}</td>
+            <td>{{ trek.available_slots }}</td>
+            <td>{{ trek.status }}</td>
+            <td>
+                <a class="btn btn-primary rounded-pill" href="/staff/trek/{{staff_id}}/manage/{{ trek.id }}">Manage</a>    
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="d-flex justify-content-end align-items-center mt-4">
+    <a class="btn btn-primary" href="/staff/treks/{{ staff_id }}">Go to Your Treks</a>
+</div>
 {% endblock %}

@@ -48,12 +48,12 @@
         <td>
             <div class="btn-group gap-2">
             {% if status == "pending" %}
-            <a class="btn btn-primary rounded-pill" href="/admin/staff/accept/{{ staff.id }}">Accept</a>
-            <a class="btn btn-danger rounded-pill" href="/admin/staff/reject/{{ staff.id }}">Reject</a>
+            <a class="btn btn-primary rounded-pill" href="/admin/staff/accept/{{ staff_member.id }}">Accept</a>
+            <a class="btn btn-danger rounded-pill" href="/admin/staff/reject/{{ staff_member.id }}">Reject</a>
             {% elif status == "accepted" %}
-            <a class="btn btn-danger" href="/admin/staff/blacklist/{{ staff.id }}">Blacklist</a>
+            <a class="btn btn-danger" href="/admin/staff/blacklist/{{ staff_member.id }}">Blacklist</a>
             {% elif status == "blacklisted" %}
-            <a class="btn btn-primary" href="/admin/staff/accept/{{ staff.id }}">Unblock</a>
+            <a class="btn btn-primary" href="/admin/staff/accept/{{ staff_member.id }}">Unblock</a>
             {% endif %}
             </div>
         </td>

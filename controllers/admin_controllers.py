@@ -88,7 +88,8 @@ def update_trek(trek_id):
             trek.status = request.form.get('status')
             trek.start_date = datetime.strptime(request.form.get('start_date'), "%Y-%m-%d").date()
             trek.end_date = datetime.strptime(request.form.get('end_date'), "%Y-%m-%d").date()
-            assigned_staff = request.form.getlist('staff')
+            assigned_staff = map(int, request.form.getlist('staff'))
+
             for staff_member_id in assigned_staff:
                 if staff_member_id not in [assignment.staff_id for assignment in trek.assigned_staff]:
                     assignment = StaffAssignments(
@@ -98,8 +99,8 @@ def update_trek(trek_id):
                     db.session.add(assignment)
 
             for assignment in trek.assigned_staff:
-                if assignment.staff_id not in [assigned_staff]:
-                    assignment = StaffAssignments.query.get(assignment.staff_id)
+                if assignment.staff_id not in assigned_staff:
+                    assignment = StaffAssignments.query.filter_by(staff_id=assignment.staff_id).all()
                     db.session.delete(assignment) 
 
             db.session.commit()
@@ -116,7 +117,8 @@ def update_trek(trek_id):
                            current_user_name=User.query.get(1).name,
                            current_role="admin",
                            trek=trek,
-                           assigned_staff_id=[assignment.staff_id for assignment in trek.assigned_staff])
+                           assigned_staff_id=[assignment.staff_id for assignment in trek.assigned_staff],
+                           staff=Staff.query.filter_by(status="accepted").all())
 
 @app.route('/admin/treks', methods=["GET", "POST"])
 def treks():
@@ -199,6 +201,22 @@ def manage_users():
                            current_role="admin",
                            result=result,
                            query=query)
+
+@app.route('/admin/user/blacklist/<int:user_id>')
+def blacklist_user(user_id):
+    user = User.query.get(user_id)
+    user.status = "blacklisted"
+    db.session.commit()
+    flash(f"User {user.name} blacklisted successfully !", "success")
+    return redirect("/admin/users")
+
+@app.route('/admin/user/accept/<int:user_id>')
+def accept_user(user_id):
+    user = User.query.get(user_id)
+    user.status = "accepted"
+    db.session.commit()
+    flash(f"User {user.name} accepted successfully !", "success")
+    return redirect("/admin/users")
 
 @app.route('/admin/bookings')
 def get_bookings():

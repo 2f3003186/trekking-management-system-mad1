@@ -1,0 +1,30 @@
+{% extends "/staff/profile.html" %}
+
+{% block content %}
+<h4 class="mb-4">Update Trek</h4>
+<div class="d-flex justify-content-center align-items-center">
+    <form method="POST">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name </label>
+            <input class="form-control" type="text" name="name" id="name" value="{{ user.name}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email </label>
+            <input class="form-control" type="email" name="email" id="email" value="{{ user.email }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="ph_num" class="form-label">Contact </label>
+            <input class="form-control" type="tel" name="ph_num" id="ph_num" value="{{ user.ph_num }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password </label>
+            <input class="form-control" type="password" name="password" id="password" placeholder="If change needed">
+        </div>
+        
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+            <a href="/staff/profile/{{staff_id}}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

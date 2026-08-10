@@ -1,7 +1,7 @@
 from model import db, User
 import os
 from flask import Flask
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 
 cur_dir = os.path.dirname(__file__)
 
@@ -34,7 +34,7 @@ def create_admin():
         db.session.commit()
 
 app = create_app()
-from controllers.auth import *
+from controllers import *
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8080)

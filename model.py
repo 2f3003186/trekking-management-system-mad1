@@ -22,7 +22,8 @@ class Staff(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     status = db.Column(db.String, nullable=False, default="Pending")
 
-    assigned_trek = db.relationship("StaffAssignments", back_populates="staff")
+    user = db.relationship("User")
+    assigned_treks = db.relationship("StaffAssignments", back_populates="staff")
 
 class StaffAssignments(db.Model):
     __tablename__ = "staff_assignments"
@@ -30,7 +31,7 @@ class StaffAssignments(db.Model):
     staff_id = db.Column(db.Integer, db.ForeignKey("staff.id"), nullable=False)
     trek_id = db.Column(db.Integer, db.ForeignKey("trek.id"), nullable=False)
 
-    staff = db.relationship("Staff", back_populates="assigned_trek")
+    staff = db.relationship("Staff", back_populates="assigned_treks")
     trek = db.relationship("Trek", back_populates="assigned_staff")
 
 class Trek(db.Model):

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+
+{% block sidebar %} 
+<li class="nav-item"><a class="nav-link" href="/staff/dashboard">Dashboard</a></li>
+<li class="nav-item"><a class="nav-link" href="/staff/treks/{{ staff_id }}">My Treks</a></li>
+<li class="nav-item"><a class="nav-link" href="/staff/users/{{ staff_id }}">Participants</a></li>
+<li class="nav-item"><a class="nav-link active" href="/staff/profile/{{ staff_id }}">Profile</a></li>
+{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">{{ user.name }}</h4>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <dl class="row mb-0">
+            <dt class="col-sm-4">Contact</dt>
+            <dd class="col-sm-8">{{ user.ph_num }}</dd>
+            <dt class="col-sm-4">Email</dt>
+            <dd class="col-sm-8">{{ user.email }}</dd>
+            <dt class="col-sm-4">Role</dt>
+            <dd class="col-sm-8">{{ user.role }}</dd>
+            <dt class="col-sm-4">Date Joined</dt>
+            <dd class="col-sm-8">{{ user.time_created.date() }}</dd>
+        </dl>
+        <div class="btn-group mt-3 gap-2">
+            <a href="/staff/profile/{{staff_id}}/update" class="btn btn-primary">Edit</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
