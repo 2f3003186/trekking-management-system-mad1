@@ -3,15 +3,6 @@
 {% block content%}
 <h4 class="mb-4">Add a Trek</h4>
 <div>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">
-            {{ message }}
-        </div>
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
     <form method="POST">
         <div class="mb-3">
             <label for="name" class="form-label">Name </label>

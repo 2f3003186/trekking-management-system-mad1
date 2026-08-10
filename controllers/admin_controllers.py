@@ -58,7 +58,10 @@ def create_trek():
             flash(f"Trek could not be added !\n {e}", "error")
         
         return redirect("/admin/treks")
-    return render_template("/admin/create_trek.html", current_user_name=User.query.get(1).name,current_role="admin",staff=Staff.query.all())
+    return render_template("/admin/create_trek.html",
+                           current_user_name=User.query.get(1).name,
+                           current_role="admin",
+                           staff=Staff.query.filter_by(status="accepted").all())
 
 @app.route('/admin/trek/delete/<int:trek_id>')
 def delete_trek(trek_id):
@@ -109,9 +112,13 @@ def update_trek(trek_id):
         return redirect("/admin/treks")
 
         
-    return render_template("/admin/update_trek.html", current_user_name=User.query.get(1).name,current_role="admin", trek=trek, assigned_staff_id=[assignment.staff_id for assignment in trek.assigned_staff])
+    return render_template("/admin/update_trek.html",
+                           current_user_name=User.query.get(1).name,
+                           current_role="admin",
+                           trek=trek,
+                           assigned_staff_id=[assignment.staff_id for assignment in trek.assigned_staff])
 
-@app.route('/admin/treks')
+@app.route('/admin/treks', methods=["GET", "POST"])
 def treks():
     query = request.args.get('q', '')
     result = []
@@ -133,7 +140,46 @@ def treks():
 
 @app.route('/admin/staff')
 def manage_staff():
-    return render_template("/admin/manage_staff.html", current_user_name=User.query.get(1).name, current_role="admin")
+    query = request.args.get('q', '')
+    result = []
+    if query:
+        if query.isdigit():
+            result = (Staff.query.filter(Staff.id.like(f"%{query}%")).all())
+
+        else:
+            result = (Staff.query.filter(Staff.name.ilike(f"%{query}%")).all())
+
+    else:
+        result = (Staff.query.all())
+    return render_template("/admin/manage_staff.html",
+                           current_user_name=User.query.get(1).name,
+                           current_role="admin",
+                           staff=result,
+                           query=query)
+
+@app.route('/admin/staff/accept/<int:staff_id>')
+def accept_staff(staff_id):
+    staff_member = Staff.query.get(staff_id)
+    staff_member.status = "accepted"
+    db.session.commit()
+    flash(f"Staff member {staff_member.user.name} accepted successfully !", "success")
+    return redirect("/admin/staff")
+
+@app.route('/admin/staff/blacklist/<int:staff_id>')
+def blacklist_staff(staff_id):
+    staff_member = Staff.query.get(staff_id)
+    staff_member.status = "blacklisted"
+    db.session.commit()
+    flash(f"Staff member {staff_member.user.name} blacklisted successfully !", "success")
+    return redirect("/admin/staff")
+
+@app.route('/admin/staff/reject/<int:staff_id>')
+def reject_staff(staff_id):
+    staff_member = Staff.query.get(staff_id)
+    db.session.delete(staff_member)
+    db.session.commit()
+    flash(f"Staff request rejected successfully !", "success")
+    return redirect("/admin/staff")
 
 @app.route('/admin/users')
 def manage_users():

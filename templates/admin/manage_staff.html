@@ -10,5 +10,59 @@
 {% endblock %}
 
 {% block content %}
+<h3 class="mb-4">Manage Staff</h3>
+<form class="mb-3" method="GET" style="max-width:450px">
+    <div class="input-group">
+        <span class="input-group-text">
+            <i class="bi bi-search"></i>
+        </span>
+        <input class="form-control" type="text" name="q" placeholder="Search by name or id" value="{{ request.args.get('q', '') }}">
+    </div>
+</form>
+{% for status in ["accepted", "pending", "blacklisted"] %}
+<h4 class="mb-3">{{ status | title }}</h4>
+<table class="table bg-white mb-2 mt-4 align-middle">
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+</thead>
+<tbody>
+    {% set ns = namespace(counter=0) %}
+    {% for staff_member in staff %}
+    {% if staff_member.status == status %}
+    {% set ns.counter = ns.counter + 1 %}
+    <tr>
+        <td>{{ staff_member.id }}</td>
+        <td>{{ staff_member.user.name }}</td>
+        <td>{{ staff_member.user.email }}</td>
+        <td>{{ staff_member.user.ph_num }}</td>
+        <td>{{ staff_member.status }}</td>
+        <td>
+            <div class="btn-group gap-2">
+            {% if status == "pending" %}
+            <a class="btn btn-primary rounded-pill" href="/admin/staff/accept/{{ staff.id }}">Accept</a>
+            <a class="btn btn-danger rounded-pill" href="/admin/staff/reject/{{ staff.id }}">Reject</a>
+            {% elif status == "accepted" %}
+            <a class="btn btn-danger" href="/admin/staff/blacklist/{{ staff.id }}">Blacklist</a>
+            {% elif status == "blacklisted" %}
+            <a class="btn btn-primary" href="/admin/staff/accept/{{ staff.id }}">Unblock</a>
+            {% endif %}
+            </div>
+        </td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+</tbody>
+</table>
+{% if ns.counter == 0 %}
+    <h5 class="fw-bold text-center">No {{status}} Entries Found !</h5>
+{% endif %}
+{% endfor %}
 
 {% endblock %}
