@@ -109,7 +109,7 @@ def update_trek(trek_id):
         return redirect("/admin/treks")
 
         
-    return render_template("/admin/update_trek.html", current_user_name=User.query.get(1).name,current_role="admin", trek=trek)
+    return render_template("/admin/update_trek.html", current_user_name=User.query.get(1).name,current_role="admin", trek=trek, assigned_staff_id=[assignment.staff_id for assignment in trek.assigned_staff])
 
 @app.route('/admin/treks')
 def treks():

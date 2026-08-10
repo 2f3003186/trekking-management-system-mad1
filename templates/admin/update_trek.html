@@ -57,7 +57,7 @@
             <select class="form-select" name="staff" id="staff" multiple size="4">
                 <option value="" disabled selected>Assign Staff</option>
                 {% for staff_member in staff %}
-                <option value="{{staff_member.id}}" {% if staff_member.id in [assignment.staff_id for assignment in trek.assigned_staff]  %} selected {% endif %}>{{staff_member.name}}</option>
+                <option value="{{staff_member.id}}" {% if staff_member.id in assigned_staff_id  %} selected {% endif %}>{{staff_member.name}}</option>
                 {% endfor %}
             </select>
         </div>
