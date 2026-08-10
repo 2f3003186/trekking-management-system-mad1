@@ -28,8 +28,9 @@
 {% if not result and query %}
 <h5 class="mt-2 fw-bold">No Results Found !</h5>
 {% endif %}
-<table class="table bg-white">
+<table class="table bg-white align-middle">
     <thead>
+        <th>S.No</th>
         <th>ID</th>
         <th>Trek Name</th>
         <th>Location</th>
@@ -41,6 +42,7 @@
     <tbody>
         {% for trek in result %}
         <tr>
+            <td>{{ loop.index }}</td>
             <td>{{ trek.id }}</td>
             <td>{{ trek.name }}</td>
             <td>{{ trek.location }}</td>

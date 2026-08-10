@@ -183,8 +183,40 @@ def reject_staff(staff_id):
 
 @app.route('/admin/users')
 def manage_users():
-    return render_template("/admin/manage_users.html", current_user_name=User.query.get(1).name, current_role="admin")
+    query = request.args.get('q', '')
+    result = []
+    if query:
+        if query.isdigit():
+            result = (User.query.filter(User.id.like(f"%{query}%")).filter_by(role="user").all())
+
+        else:
+            result = (User.query.filter(User.name.ilike(f"%{query}%")).filter_by(role="user").all())
+
+    else:
+        result = (User.query.filter_by(role="user").all())
+    return render_template("/admin/manage_users.html",
+                           current_user_name=User.query.get(1).name,
+                           current_role="admin",
+                           result=result,
+                           query=query)
 
 @app.route('/admin/bookings')
 def get_bookings():
-    return render_template("/admin/bookings.html", current_user_name=User.query.get(1).name, current_role="admin")
+    query = request.args.get('q', '')
+    result = []
+    if query:
+        if query.isdigit():
+            result = (Booking.query.filter(Booking.id.like(f"%{query}%")).all())
+
+        else:
+            result = (Booking.query.filter(Booking.user.name.ilike(f"%{query}%")).all())
+
+    else:
+        result = (Booking.query.all())
+
+    return render_template("/admin/bookings.html",
+                            current_user_name=User.query.get(1).name,
+                            current_role="admin",
+                            result=result,
+                            query=query)
+    

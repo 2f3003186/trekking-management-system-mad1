@@ -12,6 +12,7 @@ class User(db.Model):
     role = db.Column(db.String, nullable=False)
     ph_num = db.Column(db.String, unique=True)
     time_created = db.Column(db.DateTime, default=datetime.now)
+    status = db.Column(db.String, default="accepted", nullable=False)
 
     bookings = db.relationship("Booking", back_populates="user")
 

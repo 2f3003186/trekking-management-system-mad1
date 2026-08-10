@@ -10,5 +10,53 @@
 {% endblock %}
 
 {% block content %}
-
+<h3 class="mb-4">Manage Users</h3>
+<form class="mb-3" method="GET" style="max-width:450px">
+    <div class="input-group">
+        <span class="input-group-text">
+            <i class="bi bi-search"></i>
+        </span>
+        <input class="form-control" type="text" name="q" placeholder="Search by name or id" value="{{ request.args.get('q', '') }}">
+    </div>
+</form>
+{% for status in ["accepted", "blacklisted"] %}
+<h4 class="mb-3">{{ status | title }}</h4>
+<table class="table bg-white align-middle">
+    <thead>
+        <th>S.No</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>Status</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        {% set ns = namespace(counter=0) %}
+        {% for user in result %}
+        {% if user.status == status %}
+        {% set ns.counter = ns.counter + 1 %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.ph_num }}</td>
+            <td>{{ user.status }}</td>
+            <td>
+                {% if status == accepted %}
+                <a class="btn btn-danger" href="/admin/user/blacklist/{{ user.id }}">Blacklist</a>
+                {% elif status == "blacklisted" %}
+                <a class="btn btn-primary" href="/admin/user/accept/{{ user.id }}">Unblock</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+{% if ns.counter == 0 %}
+    <h5 class="fw-bold text-center">No {{status}} Entries Found !</h5>
+{% endif %}
+{% endfor %}
 {% endblock %}

@@ -24,6 +24,7 @@
 <table class="table bg-white mb-2 mt-4 align-middle">
 <thead>
     <tr>
+        <th>S.No</th>
         <th>ID</th>
         <th>Name</th>
         <th>Email</th>
@@ -38,6 +39,7 @@
     {% if staff_member.status == status %}
     {% set ns.counter = ns.counter + 1 %}
     <tr>
+        <td>{{ loop.index }}</td>
         <td>{{ staff_member.id }}</td>
         <td>{{ staff_member.user.name }}</td>
         <td>{{ staff_member.user.email }}</td>

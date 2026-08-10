@@ -38,8 +38,9 @@
     </div>
 </div>
 <h5 class="m-2">Recent Bookings</h5>
-<table class="table bg-white">
+<table class="table bg-white align-middle">
     <thead>
+        <th>S.No</th>
         <th>Booking ID</th>
         <th>User</th>
         <th>Trek</th>
@@ -49,8 +50,9 @@
     <tbody>
         {% for b in recent_bookings %}
         <tr>
+            <td>{{ loop.index }}</td>
             <td>{{b.id}}</td>
-            <td>{{b.user}}</td>
+            <td>{{b.user.name}}</td>
             <td>{{b.trek}}</td>
             <td>{{b.date.strftime('%d %b %Y')}}</td>
             <td>{{b.status}}</td>
