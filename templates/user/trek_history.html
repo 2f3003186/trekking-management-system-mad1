@@ -32,8 +32,8 @@
             <td>{{ b.trek.name }}</td>
             <td>{{ b.trek.location }}</td>
             <td>{{ b.trek.difficulty }}</td>
-            <td>{{ b.trek.end_date.strftime('%d %b %Y') if b.trek.end_date else (b.date.strftime('%d %b %Y') if b.date else 'N/A') }}</td>
-            <td><span class="badge bg-success">{{ b.status }}</span></td>
+            <td>{{ b.trek.end_date }}</td>
+            <td>{{ b.trek.status }}</td>
         </tr>
         {% endfor %}
     </tbody>

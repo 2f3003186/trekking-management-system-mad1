@@ -12,22 +12,22 @@
             <div class="bg-white border-end vh-100" style="width:220px; position:sticky; top:0;">
                 <h5 class="m-3">Trekking App</h5>
                 <ul class="nav nav-pills flex-column gap-1">
-                    {% block sidebar%}
+                    {% block sidebar %}
                     {% endblock %}
-                <li class="nav-item mt-3">
-                    <a class="nav-link text-danger" href="/login">Logout</a>
-                </li>
+                    <li class="nav-item mt-3">
+                        <a class="nav-link text-danger" href="/login">Logout</a>
+                    </li>
                 </ul>
             </div>
             <div class="flex-grow-1">
-                <div class="bg-white border-bottom px-4 py-2 d-flex justify-content-end align-items-center">
+                <div class="bg-white border-bottom px-4 py-2 d-flex justify-end align-items-center">
                     <span class="text-muted"> {{current_user_name}} &middot; {{current_role}}</span>
                 </div>
                 <div class="p-4">
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages %}
-                            <div class="alert alert-{{ category }}">
+                            <div class="alert alert-{{ 'danger' if category == 'error' else category }}">
                                 {{ message }}
                             </div>
                             {% endfor %}

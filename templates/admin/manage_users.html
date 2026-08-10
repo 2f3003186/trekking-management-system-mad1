@@ -44,7 +44,7 @@
             <td>{{ user.ph_num }}</td>
             <td>{{ user.status }}</td>
             <td>
-                {% if status == accepted %}
+                {% if status == "accepted" %}
                 <a class="btn btn-danger" href="/admin/user/blacklist/{{ user.id }}">Blacklist</a>
                 {% elif status == "blacklisted" %}
                 <a class="btn btn-primary" href="/admin/user/accept/{{ user.id }}">Unblock</a>

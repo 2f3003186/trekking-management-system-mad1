@@ -2,7 +2,7 @@
 {% block title %}Participants{% endblock %}
 
 {% block sidebar %} 
-<li class="nav-item"><a class="nav-link" href="/staff/dashboard">Dashboard</a></li>
+<li class="nav-item"><a class="nav-link" href="/staff/dashboard/{{ staff_id }}">Dashboard</a></li>
 <li class="nav-item"><a class="nav-link" href="/staff/treks/{{ staff_id }}">My Treks</a></li>
 <li class="nav-item"><a class="nav-link active" href="/staff/users/{{ staff_id }}">Participants</a></li>
 <li class="nav-item"><a class="nav-link" href="/staff/profile/{{ staff_id }}">Profile</a></li>
@@ -23,14 +23,14 @@
         <th>Action</th>
     </thead>
     <tbody>
-        <tr>
-            {% for b in trek.booking %}
+            {% for b in trek.bookings %}
             {% if b.status == "booked" %}
+            <tr>
             <td>{{ loop.index }}</td>
             <td>{{ b.user.name }}</td>
             <td>{{ b.user.email }}</td>
             <td>{{ b.user.ph_num }}</td>
-            <td>{{ b.date }}</td>
+            <td>{{ b.date.date() }}</td>
             <td>{{ b.status }}</td>
             <td>
                 <a class="btn btn-danger" href="/staff/users/{{ staff_id }}/cancel/{{ b.id }}">Cancel</a>
@@ -52,14 +52,14 @@
         <th>Action</th>
     </thead>
     <tbody>
-        <tr>
-            {% for b in trek.booking %}
+            {% for b in trek.bookings %}
             {% if b.status == "cancelled" %}
+            <tr>
             <td>{{ loop.index }}</td>
             <td>{{ b.user.name }}</td>
             <td>{{ b.user.email }}</td>
             <td>{{ b.user.ph_num }}</td>
-            <td>{{ b.date }}</td>
+            <td>{{ b.date.date() }}</td>
             <td>{{ b.status }}</td>
             <td>
                 <a class="btn btn-primary" href="/staff/users/{{ staff_id }}/restore/{{ b.id }}">Restore</a>

@@ -1,4 +1,13 @@
-{% extends "/user/profile.html" %}
+{% extends "base.html" %}
+{% block title %}Update Profile{% endblock %}
+
+{% block sidebar %}
+<li class="nav-item"><a class="nav-link" href="/user/dashboard/{{ user.id }}">Dashboard</a></li>
+<li class="nav-item"><a class="nav-link" href="/user/treks/{{ user.id }}">Browse Treks</a></li>
+<li class="nav-item"><a class="nav-link" href="/user/bookings/{{ user.id }}">My Bookings</a></li>
+<li class="nav-item"><a class="nav-link" href="/user/trek_history/{{ user.id }}">Trek History</a></li>
+<li class="nav-item"><a class="nav-link active" href="/user/profile/{{ user.id }}">Profile</a></li>
+{% endblock %}
 
 {% block content %}
 <h4 class="mb-4">Update Profile</h4>

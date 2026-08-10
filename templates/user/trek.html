@@ -1,4 +1,13 @@
-{% extends "/user/treks.html" %}
+{% extends "base.html" %}
+{% block title %}Trek Details{% endblock %}
+
+{% block sidebar %}
+<li class="nav-item"><a class="nav-link" href="/user/dashboard/{{ user.id }}">Dashboard</a></li>
+<li class="nav-item"><a class="nav-link active" href="/user/treks/{{ user.id }}">Browse Treks</a></li>
+<li class="nav-item"><a class="nav-link" href="/user/bookings/{{ user.id }}">My Bookings</a></li>
+<li class="nav-item"><a class="nav-link" href="/user/trek_history/{{ user.id }}">Trek History</a></li>
+<li class="nav-item"><a class="nav-link" href="/user/profile/{{ user.id }}">Profile</a></li>
+{% endblock %}
 {% block content %}
 <a href="/user/dashboard/{{user.id}}" class="btn btn-sm btn-outline-secondary mb-3">Back</a>
 
@@ -19,7 +28,7 @@
 <form method="POST" action="/user/trek/{{ user.id }}/cancel/{{ trek.id }}">
     <button type="submit" class="btn btn-danger">Cancel Booking</button>
 </form>
-{% elif trek.status == "Open" and trek.available_slots > 0 %}
+{% elif trek.status == "open" and trek.available_slots > 0 %}
 <form method="POST" action="/user/trek/{{ user.id }}/book/{{ trek.id }}">
     <button type="submit" class="btn btn-primary">Book Now</button>
 </form>
